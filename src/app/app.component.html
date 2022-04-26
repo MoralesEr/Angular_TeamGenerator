@@ -1,0 +1,32 @@
+<div class="container"> <!--Contenidor principal-->
+  <div class="ui card"> <!--Contenidor de l'aplicació-->
+    <h1>Generador d'equips</h1> 
+    <ul class="list"> <!--Llista que guarda els noms entrats-->
+      <li *ngFor="let member of members">{{member | titlecase}}</li> <!--Iteració que per cada member dins de la llista de members genera un li-->
+    </ul>
+    <div class="names-container"> <!--Contenidor amb l'input per entrar els noms-->
+      <input type="text" 
+      #addMemberInput
+      placeholder="Nom"
+      (input)="onInput(addMemberInput.value)"
+      [value]="newMemberName"
+      /> <!--Agafem el valor que es troba al Input-->
+      <button (click)="addMember()">Afegeix</button> <!--Cridem el metode que afageix el valor del Input al array-->
+      <button id="deleteButton" (click)="deleteMembers()">Esborra</button> <!--Cridem el metode que esborra els membres del array-->
+    </div>
+    <div class="teams-container"> <!--Contenidor amb l'input per generar els equips-->
+      <input 
+      #numberOfTeamsInput
+      type="number" 
+      placeholder="# d'equips"
+      (input)="onTeamInput(numberOfTeamsInput.value)"
+      [value]="numberOfTeams"
+      />
+      <button (click)="generateTeams()">Generar</button>
+    </div>
+    <p *ngIf="errorMessage" class="error-message">{{errorMessage}}</p>
+  </div>
+  <div *ngIf="teams.length">
+    <app-team *ngFor="let team of teams; let i = index" [team] = "team" [index] = "i"></app-team> 
+  </div>
+</div>
